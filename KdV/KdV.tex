@@ -1,0 +1,81 @@
+\documentclass[12pt, a4j]{jsarticle}
+\usepackage[%
+top    = 30truemm,%
+bottom = 30truemm,%
+left   = 25truemm,%
+right  = 25truemm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{bm,braket,ascmac}
+
+
+%(RE)NEW COMMANDS
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\p}{\partial}
+
+
+\begin{document}
+
+次の方程式を解く:
+\begin{equation}
+ u_{t} + 6 u u_{x} + u_{xxx} = 0.
+  \label{KdV}
+\end{equation}
+ただし 
+$u:\R \times [0, \infty) \ni (x, t) \to u(x, t) \in \R$
+である. ここでは周期境界条件
+\begin{equation}
+ u(x, t) = u(x + L, t)
+  \quad (\forall (x, t) \in \R \times [0, \infty) )
+  \notag
+\end{equation}
+を満たすものを考える. ある正の整数 $N$ に対して
+\begin{equation}
+ x_{i} = \dfrac{i}{N} \quad (0 \leq i \leq N)
+  \notag
+\end{equation}
+と定め,
+\begin{equation}
+ 0 = x_{0} < x_{1} < \dots < x_{N-1} < x_{N} = L
+  \notag
+\end{equation}
+と差分化する. 今 $\Delta x = L/N$ とおくと
+\begin{align}
+ u_{x}(x_{i}, t)
+ &= \dfrac{u(x_{i+1}, t) - u(x_{i-1}, t)}{2 \Delta x}
+    + O((\Delta x)^{2}), \notag \\
+ u_{xxx}(x_{i}, t)
+ &= \dfrac{
+      u(x_{i+2}, t)
+      - 2*u(x_{i+1}, t)
+      + 2*u(x_{i-1}, t)
+      - u(x_{i-2}, t)
+    }{2 (\Delta x)^{3}}
+    + O((\Delta x)^{2})
+ \notag
+\end{align}
+となる. よって $O((\Delta x)^{2})$ の精度で
+\begin{equation}
+ u_t = F(u),
+  \notag
+\end{equation}
+\begin{align}
+ F(u)
+  &= \left(
+     - 6 u(x_{i}, t) \cdot
+     \dfrac{u(x_{i+1}, t) - u(x_{i-1}, t)}{2 \Delta x}
+     \right.
+  \notag \\
+  & \quad \quad \quad \left.
+     \dfrac{
+      - u(x_{i+2}, t)
+      - 2*u(x_{i+1}, t)
+      + 2*u(x_{i-1}, t)
+      - u(x_{i-2}, t)
+    }{2 (\Delta x)^{3}}
+    \right)_{0 \leq i \leq N}
+  \notag
+\end{align}
+となる. ここではこれを利用して4次の Runge-Kutta 法により
+時間積分を行う.
+
+\end{document}

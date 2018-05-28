@@ -1,0 +1,86 @@
+\documentclass[12pt,a4j]{jsarticle}
+\usepackage[%
+top    = 30truemm,%
+bottom = 30truemm,%
+left   = 25truemm,%
+right  = 25truemm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{bm,braket,ascmac}
+
+
+% (RE)NEW COMMANDS
+\newcommand{\p}{\partial}
+\newcommand{\R}{\mathbb{R}}
+
+\begin{document}
+
+
+非圧縮の $2$ 次元 Navier-Stokes 方程式を考える:
+\begin{equation}
+ u_{t} + u u_{x} + v u_{y} 
+  = - p_{x} + Re^{-1} (u_{xx} + u_{yy}),
+  \label{NSeq x}
+\end{equation}
+\begin{equation}
+ v_{t} + u v_{x} + v v_{y}
+  = - p_{y} + Re^{-1} (v_{xx} + v_{yy}),
+  \label{NSeq y}
+\end{equation}
+\begin{equation}
+ u_{x} + v_{y} = 0.
+  \label{incomp}
+\end{equation}
+流れ関数 $\psi$ を
+\begin{equation}
+  u =   \psi_{y}, \qquad
+  v = - \psi_{x}
+  \label{stream func}
+\end{equation}
+で導入すると, 非圧縮条件 (\ref{incomp}) は自動的に満たされる.
+渦度 $\omega$ を
+\begin{equation}
+ \omega = - u_{y} + v_{x} = - (\psi_{xx} + \psi_{yy})
+  \label{vorticity}
+\end{equation}
+で導入すると, (\ref{NSeq x}), (\ref{NSeq y}) から
+\begin{equation}
+ \omega_{t} + J(\psi, \omega) 
+  = Re^{-1} (\omega_{xx} + \omega_{yy})
+  \label{vorticity eq}
+\end{equation}
+が得られる. ここで
+\begin{equation}
+ J(\psi, \omega) = \psi_{y} \omega_{x} - \psi_{x} \omega_{y}
+  \label{def Jacobi}
+\end{equation}
+である. \par
+
+流体の領域は
+\begin{equation}
+ [- L_{x}, L_{x}] \times [- L_{y}, L_{y}]
+  \setminus
+  \left[ -\dfrac{1}{2}, \dfrac{1}{2} \right]
+  \times
+  \left[ -\dfrac{1}{2}, \dfrac{1}{2} \right]
+  \subseteq
+  \R^{2}
+\end{equation}
+とする. 境界条件は,
+$y = \pm L_{y}$ では周期境界条件,
+$x = \pm 1/2$ および $y = \pm 1/2$ の境界では
+粘着境界条件
+\begin{equation}
+ u = v = 0,
+\end{equation}
+$x = - L_{x}$ では固定速度の境界条件
+\begin{equation}
+ u = 1, \quad
+ v = 0,
+\end{equation}
+$x = L_{y}$ ではノイマン条件
+\begin{equation}
+ u_{x} = v_{x} = 0
+\end{equation}
+を課す.
+
+\end{document}
