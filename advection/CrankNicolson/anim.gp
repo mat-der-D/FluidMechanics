@@ -1,7 +1,8 @@
 reset
 set nokey
 set xrange [0:50]
-set yrange [-1.2:1.2]
+set yrange [-0.5:1.5]
+# set yrange [-50:3000]
 
 set term gif animate
 set output "adv.gif" 

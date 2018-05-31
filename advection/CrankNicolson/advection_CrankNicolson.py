@@ -5,10 +5,10 @@ class advection:
         self.Lx = 50
         self.Nx = 500
         self.dt = 0.01
-        self.Nt = 50000
+        self.Nt = 10000
         self.dx = self.Lx / self.Nx
         self.x = np.linspace(0, self.Lx, self.Nx, endpoint = False)
-        self.out = 500
+        self.out = 100
         E = np.eye(self.Nx)
         lmb = self.dt/(4*self.dx)
         A_coef = lmb * np.roll(E, +1, axis = 1) \
@@ -23,7 +23,9 @@ class advection:
         return np.dot(self.A_inv_B, u)
     
 adv = advection()
-u = np.sin(4*np.pi*adv.x / adv.Lx)
+# u = np.sin(4*np.pi*adv.x / adv.Lx) # initial condition
+u = np.exp(1 - (adv.Lx/2)**2 / ((adv.x + adv.dx) \
+                              * (adv.dx + adv.Lx - adv.x)) )
 
 f = open("adv.dat","w")
 for ix in range(adv.Nx):
