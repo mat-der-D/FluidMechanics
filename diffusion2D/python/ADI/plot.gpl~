@@ -1,0 +1,8 @@
+reset
+set zrange[-2:2]
+i = 0
+do for[i = 0 : 100]{
+   splot "diffusion.dat" index i w l
+   pause 1
+}
+reset
