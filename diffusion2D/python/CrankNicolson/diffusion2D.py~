@@ -1,0 +1,26 @@
+#########################################
+# 2次元拡散方程式
+#   \p_t u = D \nabla^2 u
+# の数値積分
+#    - Crank-Nicolson 法
+#########################################
+import numpy as np
+
+class diffusion:
+
+    def __init__(self):
+        self.Lx, self.Ly = 100.0, 100.0
+        self.Nx, self.Ny = 1000, 1000
+        self.dt = 0.01
+        self.D = 4.0
+
+    def init_mesh(self):
+        x = np.linspace(0.0, self.Lx, self.Nx, endpoint=False)
+        y = np.linspace(0.0, self.Ly, self.Ny, endpoint=False)
+        xx, yy = np.meshgrid(x, y)
+        
+        return xx, yy
+
+    def partial_yy(self, u):
+        
+        
