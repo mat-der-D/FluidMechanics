@@ -1,0 +1,14 @@
+module settings
+
+  implicit none
+
+  real(8), parameter :: pi = 3.1415926535897932384626d0
+  real(8), parameter :: Lx = 50d0, Lz = 50d0
+  integer, parameter :: Nx = 100, Nz = 100
+  real(8), parameter :: dx = Lx/Nx, dz = Lz/Nz
+  integer :: iii, kkk
+  real(8), parameter :: &
+       & x(0:Nx-1) = (/ (dx*iii, iii=0, Nx-1) /), &
+       & z(0:Nz) = (/ (dz*kkk, kkk=0, Nz) /)
+  
+end module settings

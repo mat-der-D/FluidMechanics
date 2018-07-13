@@ -1,0 +1,13 @@
+reset
+#set zrange[-2:2]
+i = 0
+dt = 1.0
+L = 10
+D = 0.1
+a = 2*pi/L
+b = 4*pi**2*D/(L**2)
+do for[i = 0 : 100]{
+   splot "<paste diffusion.dat exact.dat" u 1:2:($3 - $6) index i w l
+   pause 1
+}
+reset

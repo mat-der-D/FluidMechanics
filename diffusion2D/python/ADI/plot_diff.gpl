@@ -7,9 +7,7 @@ D = 0.1
 a = 2*pi/L
 b = 4*pi**2*D/(L**2)
 do for[i = 0 : 100]{
-   t = dt*i
-   f(xx,yy) = (sin(a*xx) + cos(a*yy))*exp(-b*t)
-   splot "diffusion.dat" u 1:2:($3 - f($1,$2)) index i w l, f(x,y) w l
+   splot "<paste diffusion.dat exact.dat" u 1:2:($3 - $6) index i w l
    pause 1
 }
 reset
