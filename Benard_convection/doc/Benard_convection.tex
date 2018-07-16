@@ -1,0 +1,133 @@
+\documentclass[12pt,a4j]{jsarticle}
+\usepackage[%
+top    = 30truemm,%
+bottom = 30truemm,%
+left   = 25truemm,%
+right  = 25truemm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{bm,braket,ascmac}
+
+
+\newcommand{\p}{\partial}
+
+\def\labelenumi{(\arabic{enumi})}
+
+\title{B\'{e}nard 対流問題}
+\author{@mat\_der\_D}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+
+\section{基礎方程式}
+
+基礎方程式は, Boussinesq モデルを用いる:
+\begin{equation}
+ \dfrac{\p \bm{u}}{\p t}
+  + (\bm{u} \cdot \nabla) \bm{u}
+  = - \nabla p + Pr Ra T \bm{k}
+    + Pr \nabla^{2} \bm{u},
+\end{equation}
+\begin{equation}
+ \nabla \cdot \bm{u} = 0,
+\end{equation}
+\begin{equation}
+ \dfrac{\p T}{\p t} 
+  + (\bm{u} \cdot \nabla) T
+  = \nabla^{2} T.
+\end{equation}
+ここで $\bm{u} = (u, v, w)$ は (無次元) 速度場,
+$T$ は (無次元) 温度場
+\footnote{正確にはある基準温度からの温度差
+(を無次元化したもの). 方程式は一見
+温度の基準の取り方によって変わるように見えるが,
+基準の取り換えによる項は圧力項に吸収できるため,
+そのような心配はない.},
+$p$ は (無次元) 圧力場であり,
+$\bm{k}$ は $z$ 方向の単位ベクトルである.
+無次元化に用いた長さスケールを $L$,
+時間スケールを $\tau$, 速度スケールを $U$,
+温度スケールを $\Theta$ とする.
+これらのスケールの間には
+\begin{equation}
+  \tau = \dfrac{L^2}{\kappa}, \quad
+  U    = \dfrac{L}{\tau} = \dfrac{\kappa}{L}
+  \notag
+\end{equation}
+が成り立つ. ただし $\kappa$ は温度拡散率である.
+また無次元パラメーターである
+Prandtl 数 $Pr$, Rayleigh 数 $Ra$ は
+\begin{equation}
+ Pr = \dfrac{\nu}{\kappa}, \quad
+ Ra = \dfrac{\alpha g \Theta L^{3}}{\kappa \nu}
+ \notag
+\end{equation}
+で定義する. \par
+
+  二次元の場合 (全ての変数が $y$ に依存せず, $v \equiv 0$ の場合)
+について考える. このときは変数はすべて $x, z$ の関数であり,
+$\bm{u} = (u, w)$, $\nabla = (\frac{\p}{\p x}, \frac{\p}{\p z})$
+と解釈することとする. 流れ関数 $\psi(x, z)$ を
+\begin{equation}
+ u =   \dfrac{\p \psi}{\p z}, \quad
+ w = - \dfrac{\p \psi}{\p x}
+ \notag
+\end{equation}
+と導入することで, 基礎方程式は次のように変形される
+\footnote{非圧縮条件 $\nabla \cdot \bm{u} = 0$ は
+流れ関数を導入した時点で自動的に満足する.}:
+\begin{equation}
+ \dfrac{\p \omega}{\p t}
+  + J(\psi, \omega)
+  = - Pr Ra \dfrac{\p T}{\p x}
+    + Pr \nabla^{2} \omega,
+\end{equation}
+\begin{equation}
+ \dfrac{\p T}{\p t} + J(\psi, T) = \nabla^{2} T.
+\end{equation}
+ここで $\omega = - \nabla^{2} \psi$ は $y$ 方向の
+渦度である. また $a(x, z), b(x, z)$ に対して
+\begin{equation}
+ J(a, b) = 
+  \dfrac{\p a}{\p z} \dfrac{\p b}{\p x}
+  -
+  \dfrac{\p a}{\p x} \dfrac{\p b}{\p z}
+\end{equation}
+と定義する.
+
+\section{境界条件}
+
+速度の境界条件は, 運動学的条件 $+$ 応力なし条件:
+       \begin{equation}
+	\dfrac{\p u}{\p z}
+	 = \dfrac{\p v}{\p z}
+	 = w
+	 = 0
+	 \qquad (\text{at } z = \text{境界})
+       \end{equation}
+       を課す.
+       2次元の場合, 流れ関数を用いて書き換えると
+       \begin{equation}
+	\psi = \dfrac{\p^{2} \psi}{\p z^{2}}
+	 = 0
+	 \qquad (\text{at } z = \text{境界})
+       \end{equation}
+       となる\footnote{厳密には, 水平方向の流量が
+       常に $0$ である条件も課している.}.
+\end{enumerate}
+温度の境界条件は
+\begin{equation}
+ T = T_{L} \qquad (\text{at } z = \text{下の境界}),
+  \qquad
+ T = T_{U} \qquad (\text{at } z = \text{上の境界})
+\end{equation}
+とする. ただし $T_{L} > T_{U}$. \par
+
+ここで無次元化に用いた長さスケール $L$ を
+上下境界の間の距離とし, 温度スケール $\Theta$ を
+$T_{L} - T_{U}$ と定めれば,
+境界を $z = 0, 1$ とでき, また温度に関する境界条件を
+$T(z = 0) = 1, T(z = 1) = 0$ とできる.
+
+\end{document}
