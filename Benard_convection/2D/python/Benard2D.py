@@ -15,7 +15,7 @@ class Benard_2D:
         self.zz, self.xx = np.meshgrid(self.z, self.x)
         self.dt = 0.001
         self.Nt = 5000
-        self.tout = 20
+        self.tout = 100
         
         self.T_U = 0.
         self.T_L = 1.
@@ -194,6 +194,16 @@ class Benard_2D:
             ff.write("\n")
         ff.write("\n")
 
+    def output_T(self, T, ff):
+        for i in range(2*self.Nx+1):
+            ii = i % self.Nx
+            for k in range(self.Nz+1):
+                ff.write(str(i * self.dx) + " " + \
+                         str(self.z[k])   + " " + \
+                         str(T[ii, k])    + "\n")
+            ff.write("\n")
+        ff.write("\n")
+
     def output_velocity(self, psi, ff):
         u = self.derivative_z(psi)
         w = - self.derivative_x(psi)
@@ -222,7 +232,7 @@ gg = open("Temp.d", "w")
 
 # bc.output_u(psi, ff)
 bc.output_velocity(psi, ff)
-bc.output_u(T, gg)
+bc.output_T(T, gg)
 # bc.output_u(omega, ff)
 
 for it in range(1, bc.Nt + 1):
@@ -230,7 +240,7 @@ for it in range(1, bc.Nt + 1):
     if it % bc.tout == 0:
         print("it =" + str(it) + "\n")
         bc.output_velocity(psi, ff)
-        bc.output_u(T, gg)
+        bc.output_T(T, gg)
 
 ff.close()
 gg.close()
