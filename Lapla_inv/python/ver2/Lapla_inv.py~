@@ -1,0 +1,100 @@
+import sys
+import numpy as np
+
+
+class Lapla_inv:
+
+    def __init__(self):
+        self.Lx = 10.
+        self.Nx = 100
+        self.Lz = 10.
+        self.Nz = 100
+        self.dx, self.dz = self.Lx/self.Nx, self.Lz/self.Nz
+        self.x = np.linspace(0., self.Lx, self.Nx, endpoint=False)
+        self.z = np.linspace(0., self.Lz, self.Nz+1, endpoint=True)
+        self.zz, self.xx = np.meshgrid(self.z, self.x)
+        
+        # For Lapla_inv
+        E_x = np.eye(self.Nx)
+        E_z = np.eye(self.Nz+1)
+        
+        self.mu_x = 1./( 2*(1 + (self.dx/self.dz)**2) )
+        self.mu_z = 1./( 2*(1 + (self.dz/self.dx)**2) )
+        self.mu_omega = 1./( 2*(self.dx**(-2) + self.dz**(-2)) )
+
+        self.A_Li_x = self.mu_x*(np.roll(E_x, +1, 0) \
+                                 + np.roll(E_x, -1, 0))
+        self.A_Li_z = self.mu_z*(np.roll(E_z, +1, 0) \
+                                 + np.roll(E_z, -1, 0))
+        self.A_Li_z[:,0] = self.A_Li_z[:,1]
+        self.A_Li_z[:,self.Nz] = self.A_Li_z[:,self.Nz-1]
+        
+    def u_Lapla_u(self, u):
+        u_xx = self.derivative_xx(u)
+        u_zz = self.derivative_zz(u)
+        return u_xx + u_zz
+
+    def norm(self, u):
+        return np.sqrt( (u**2).sum()/(self.Nx*(self.Nz + 1)) )
+    
+    def psi_omega_1(self, omega, psi_old):
+        psi = np.dot(self.A_Li_x, psi_old) \
+              + np.dot(psi_old, self.A_Li_z) \
+              + self.mu_omega * omega
+        return psi
+
+
+    def psi_omega(self, omega, psi_old):
+        '''\nabla^2 psi = - omega を解く'''
+        eps = 10.**(-3) # 誤差評価
+        psi = psi_old
+        istop = 10 #エラー終了
+        error=1.
+        i = 0
+        while error>eps:
+            for icount in range(1000):
+                psi = np.dot(self.A_Li_x, psi) \
+                      + np.dot(psi, self.A_Li_z) \
+                      + self.mu_omega * omega
+            error = self.norm(omega + self.u_Lapla_u(psi))
+            i += 1
+            if i >= istop:
+                print("Error occured!! error=" + str(error))
+                sys.exit()
+        return psi
+
+    def output_u(self, u, ff):
+        for i in range(self.Nx):
+            for k in range(self.Nz+1):
+                ff.write(str(self.x[i]) + " " + \
+                         str(self.z[k]) + " " + \
+                         str(u[i, k])   + "\n")
+            ff.write("\n")
+        ff.write("\n")
+
+    def derivative_xx(self, f):
+        ddf = (np.roll(f, -1, 0) + np.roll(f, +1, 0) - 2*f) \
+              / ( self.dx**2 )
+        return ddf
+
+    def derivative_zz(self, f):
+        ddf = (np.roll(f, -1, 1) + np.roll(f, +1, 1) - 2*f) \
+              / ( self.dz**2 )
+        ddf[:,0] = ddf[:,1]
+        ddf[:,self.Nz] = ddf[:,self.Nz-1]
+        return ddf
+        
+li = Lapla_inv()
+
+psi = np.sin(2*np.pi*li.zz/li.Lz)
+omega = - li.u_Lapla_u(psi)
+psi *= 0.
+
+f = open("error.d", "w")
+
+for i in range(10000):
+    psi = li.psi_omega_1(omega, psi)
+    err = li.norm(omega + li.u_Lapla_u(psi))
+    f.write(str(i) + " " + str(err) + "\n")
+
+f.close()

@@ -86,7 +86,7 @@ $\bm{u} = (u, w)$, $\nabla = (\frac{\p}{\p x}, \frac{\p}{\p z})$
 \begin{equation}
  \dfrac{\p T}{\p t} + J(\psi, T) = \nabla^{2} T.
 \end{equation}
-ここで $\omega = - \nabla^{2} \psi$ は $y$ 方向の
+ここで $\omega = \nabla^{2} \psi$ は $y$ 方向の
 渦度である. また $a(x, z), b(x, z)$ に対して
 \begin{equation}
  J(a, b) = 
@@ -99,23 +99,22 @@ $\bm{u} = (u, w)$, $\nabla = (\frac{\p}{\p x}, \frac{\p}{\p z})$
 \section{境界条件}
 
 速度の境界条件は, 運動学的条件 $+$ 応力なし条件:
-       \begin{equation}
-	\dfrac{\p u}{\p z}
-	 = \dfrac{\p v}{\p z}
-	 = w
-	 = 0
-	 \qquad (\text{at } z = \text{境界})
-       \end{equation}
-       を課す.
-       2次元の場合, 流れ関数を用いて書き換えると
-       \begin{equation}
-	\psi = \dfrac{\p^{2} \psi}{\p z^{2}}
-	 = 0
-	 \qquad (\text{at } z = \text{境界})
-       \end{equation}
-       となる\footnote{厳密には, 水平方向の流量が
-       常に $0$ である条件も課している.}.
-\end{enumerate}
+\begin{equation}
+ \dfrac{\p u}{\p z}
+  = \dfrac{\p v}{\p z}
+  = w
+  = 0
+  \qquad (\text{at } z = \text{境界})
+\end{equation}
+を課す.
+2次元の場合, 流れ関数を用いて書き換えると
+\begin{equation}
+ \psi = \dfrac{\p^{2} \psi}{\p z^{2}}
+  = 0
+  \qquad (\text{at } z = \text{境界})
+\end{equation}
+となる\footnote{厳密には, 水平方向の流量が
+常に $0$ である条件も課している.}.
 温度の境界条件は
 \begin{equation}
  T = T_{L} \qquad (\text{at } z = \text{下の境界}),
